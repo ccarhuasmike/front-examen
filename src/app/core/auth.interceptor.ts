@@ -17,20 +17,10 @@ import {environment} from "../../environments/environment";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  /**
-   * Constructor
-   */
   constructor(
-    //private _authService: AuthService,
+
     private router: Router) {
   }
-
-  /**
-   * Intercept
-   *
-   * @param req
-   * @param next
-   */
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -41,23 +31,17 @@ export class AuthInterceptor implements HttpInterceptor {
         .set("SO", "web")
         .set("project", "front-examen")
         .set("Accept", 'application/json')
-      //.set('content-type', 'application/json')
     });
 
     // Response
     return next.handle(newReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        // Catch "401 Unauthorized" responses
         if (
           error instanceof HttpErrorResponse &&
           error.status === 401 &&
-          !location.pathname.includes("sign-in")
+          !location.pathname.includes("login")
         ) {
           localStorage.clear();
-          //location.reload();
-          // Sign out
-          // this._authService.signOut().subscribe(() => {
-          // });
         }
         return throwError(error);
       })

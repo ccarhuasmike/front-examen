@@ -67,6 +67,16 @@
                           <div class="col-md-12">
                             <div class="table-container">
                               <table mat-table [dataSource]="dataSource" class="table" style="width: 1450px !important">
+                                <ng-container matColumnDef="select">
+                                  <mat-header-cell class="table-column-100 text-justify-content" *matHeaderCellDef>
+                                    Accion
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-100 text-justify-content" *matCellDef="let row">
+                                    <button mat-raised-button class="btn btn-info" (click)="btnEliminar(row)">
+                                      <mat-icon>delete</mat-icon>
+                                    </button>
+                                  </mat-cell>
+                                </ng-container>
                                 <ng-container matColumnDef="docuemento">
                                   <mat-header-cell class="table-column-100 text-justify-content" *matHeaderCellDef>
                                     Nro Documento
@@ -120,7 +130,7 @@
                                   </mat-header-cell>
                                   <mat-cell class="table-column-100 text-justify-content"
                                             *matCellDef="let row; let i=index;">
-                                    {{ row.salario }}
+                                    {{ row.salario | number : '1.2-2' }}
                                   </mat-cell>
                                 </ng-container>
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -139,7 +149,7 @@
                               <mat-paginator #paginator [hidden]="dataSource?.length === 0" [length]="totalRegistros"
                                              (page)="pageChanged($event)"
                                              [pageSize]="listEmpleadoRequest.pagination!.pageSize"
-                                             [pageSizeOptions]="[10, 50, 100]">
+                                             [pageSizeOptions]="[5,10, 50, 100]">
                               </mat-paginator>
                             </div>
                           </div>

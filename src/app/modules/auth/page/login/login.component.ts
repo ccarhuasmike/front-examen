@@ -36,10 +36,9 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.crearFormulario();
   }
-
   crearFormulario() {
     this.datosGeneralesFormGroup = this._formBuilder.group({
-      usuario: ['', Validators.required],//Cargo de Personal es obligatoria
+      usuario: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ['', Validators.required],//Seleccione la Condicion
     });
   }
@@ -62,16 +61,5 @@ export class LoginComponent implements OnInit {
         console.error('Login error', error);
       }
     );
-    // await this.authService.signIn(listUsuarioRequest).then((response: any) => {
-    //   debugger;
-    //   if(response.success){
-    //     this.router.navigate(['/empleado/bandejaempleado'])
-    //   }else{
-    //     this._snackBar.open(response.message, "");
-    //   }
-    //   this.isSubmitted = false;
-    // }, (error: any) => {
-    //
-    // });
   }
 }

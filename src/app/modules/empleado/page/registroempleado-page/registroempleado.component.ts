@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {NgProgress, NgProgressRef} from '@ngx-progressbar/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Empleado} from "../../model/Empleado";
 import {EmpleadoService} from "../../service/EmpleadoService";
 import {EmpleadoRequest} from "../../model/EmpleadoRequest";
 import {DialogoConfirmacionComponent} from "@shared/components/dialogo-confirmacion/dialogo-confirmacion.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {DatePipe, DecimalPipe} from "@angular/common";
+import {DatePipe} from "@angular/common";
+
 @Component({
   selector: 'app-registrounidadmantenimiento',
   templateUrl: './registroempleado.component.html',
@@ -24,7 +25,9 @@ export class RegistroEmpleadoComponent implements OnInit {
   value: number = 0;
   datosGeneralesFormGroup!: UntypedFormGroup;
   IdEmpleado: number = 0;
+
   constructor(
+
     private ngProgress: NgProgress,
     private empleadoService: EmpleadoService,
     private route: ActivatedRoute,
@@ -32,10 +35,11 @@ export class RegistroEmpleadoComponent implements OnInit {
     private _formBuilder: UntypedFormBuilder,
     private _snackBar: MatSnackBar,
     private datePipe: DatePipe,
-    private decimalPipe: DecimalPipe
+    private router: Router
   ) {
 
   }
+
   ngOnDestroy(): void {
     this.ngProgress.destroyAll();
   }
@@ -99,6 +103,7 @@ export class RegistroEmpleadoComponent implements OnInit {
           this.isSubmitted = true;
           this.progressRef.start();
           let fechaNacimiento = this.datosGeneralesFormGroup.value.fechaNacimiento === "" ? undefined : this.datePipe.transform(this.datosGeneralesFormGroup.value.fechaNacimiento, 'yyyy-MM-dd')?.toString();
+          debugger;
           this.registrarDatosGenerales = {
             empleado: {
               id: this.IdEmpleado,
@@ -112,13 +117,25 @@ export class RegistroEmpleadoComponent implements OnInit {
             }
           }
           let response = await this.empleadoService.postInsertarEmpleado(this.registrarDatosGenerales);
-          if (response.success)
-            this._snackBar.open(response.message, "");
-          else
-            this._snackBar.open(response.message, "");
+          if (response.success) {
+            this._snackBar.open(response.message, "", {
+              duration: 1000
+            });
+            setTimeout(() => {
+              this.router.navigate(['/empleado/bandejaempleado'])
+            }, 1000);
+          } else
+            this._snackBar.open(response.message, "", {
+              duration: 1000
+            });
           this.isSubmitted = false;
           this.progressRef.complete();
         }
       });
   }
 }
+
+
+
+
+

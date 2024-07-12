@@ -33,12 +33,12 @@ import {MatCardModule} from '@angular/material/card';
 import {RouterModule} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
-
 import {BandejaEmpleadoComponent} from "./page/bandejaempleado-page/bandejaempleado.component";
 import {RegistroEmpleadoComponent} from "./page/registroempleado-page/registroempleado.component";
 import {EmpleadosRoutingModule} from "./empleado-routing.module";
 import {DecimalPipe} from '@angular/common';
 import {getDutchPaginatorIntl} from "./service/es-paginator-intl";
+import {SharedModule} from "@shared/shared.module";
 @NgModule({
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -82,6 +82,7 @@ import {getDutchPaginatorIntl} from "./service/es-paginator-intl";
     MatSidenavModule,
     RouterModule.forChild(EmpleadosRoutingModule),
     MatTooltipModule,
+    SharedModule,
   ],
   providers: [
     DecimalPipe,

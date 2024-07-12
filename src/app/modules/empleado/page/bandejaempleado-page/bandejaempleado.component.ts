@@ -1,17 +1,22 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ListEmpleadoRequest} from "../../model/ListEmpleadoRequest"
 import {EmpleadoService} from "../../service/EmpleadoService";
+import {DialogoConfirmacionComponent} from "@shared/components/dialogo-confirmacion/dialogo-confirmacion.component";
+import {MatDialog} from "@angular/material/dialog";
+import {EmpleadoRequest} from "../../model/EmpleadoRequest";
+import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
   selector: 'app-bandejaempleado',
   templateUrl: './bandejaempleado.component.html',
   styleUrls: ['./bandejaempleado.component.css'],
 })
 export class BandejaEmpleadoComponent implements OnInit, OnDestroy {
+  registrarDatosGenerales!: EmpleadoRequest;
   listEmpleadoRequest: ListEmpleadoRequest = {
     accion: "ListarPaginadoEmpleado",
     pagination: {
       pageNumber: 1,
-      pageSize: 10
+      pageSize: 5
     }
   };
   matexpansionpanelfiltro: boolean = false;
@@ -20,6 +25,7 @@ export class BandejaEmpleadoComponent implements OnInit, OnDestroy {
   public dataSource: any = [];
   displayedColumns: string[] =
     [
+      'select',
       'docuemento',
       'nombre',
       'apellido',
@@ -29,10 +35,47 @@ export class BandejaEmpleadoComponent implements OnInit, OnDestroy {
     ];
 
   constructor(
-    private empleadoService: EmpleadoService
+    private empleadoService: EmpleadoService,
+    public dialogo: MatDialog,
+    private _snackBar: MatSnackBar,
   ) {
   }
 
+  btnEliminar(row:any){
+    this.dialogo.open(DialogoConfirmacionComponent, {
+      maxWidth: '25vw',
+      maxHeight: 'auto',
+      height: 'auto',
+      width: '25%',
+      disableClose: true,
+      data: {
+        titulo: `Mensaje de Confirmación`,
+      }
+    })
+      .afterClosed()
+      .subscribe(async (confirmado: boolean) => {
+        if (confirmado) {
+
+          this.registrarDatosGenerales = {
+            empleado: {
+              accion:"EliminarEmpleado",
+              id: row.id
+            }
+          }
+          let response = await this.empleadoService.postInsertarEmpleado(this.registrarDatosGenerales);
+          if (response.success) {
+            this._snackBar.open(response.message, "", {
+              duration: 1000
+            });
+            this.loadDatos();
+          } else
+            this._snackBar.open(response.message, "", {
+              duration: 1000
+            });
+        }
+      });
+
+  }
   async LimpiarControles() {
     this.listEmpleadoRequest.nombres = '';
     this.listEmpleadoRequest.documentoId = '';

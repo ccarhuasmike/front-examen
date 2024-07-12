@@ -5,8 +5,8 @@
   <meta name="author" content="Kodinger">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>My Login Page</title>
-<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
-<!--  <link rel="stylesheet" type="text/css" href="css/my-login.css">-->
+  <!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+  <!--  <link rel="stylesheet" type="text/css" href="css/my-login.css">-->
 </head>
 
 <body class="my-login-page">
@@ -22,32 +22,35 @@
             <h4 class="card-title">Iniciar Sesión</h4>
             <form [formGroup]="datosGeneralesFormGroup" *ngIf="datosGeneralesFormGroup" (ngSubmit)='login()'>
               <div class="form-group">
-                <mat-form-field appearance="outline" >
+                <mat-form-field appearance="outline">
                   <mat-label>Usuario</mat-label>
                   <input matInput placeholder="Ingrese Usuario" formControlName="usuario">
                   <mat-error *ngIf="datosGeneralesFormGroup.get('usuario')?.hasError('required')">
                     Es necesario Usuario!
                   </mat-error>
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('usuario')?.hasError('pattern')">
+                    El Formato de correo inválido.!
+                  </mat-error>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="outline" >
+                <mat-form-field appearance="outline">
                   <mat-label>Password</mat-label>
-                  <input  type="password"  matInput placeholder="Ingrese Password" formControlName="password">
+                  <input type="password" matInput placeholder="Ingrese Password" formControlName="password">
                   <mat-error *ngIf="datosGeneralesFormGroup.get('password')?.hasError('required')">
                     Es necesario Password!
                   </mat-error>
                 </mat-form-field>
               </div>
               <div class="form-group m-0">
-                <button mat-raised-button class="btn btn-primary btn-block" >
-<!--                  <span class="material-symbols-outlined">delete</span>-->
+                <button mat-raised-button class="btn btn-primary btn-block">
+                  <!--                  <span class="material-symbols-outlined">delete</span>-->
                   Iniciar Sessión
                 </button>
               </div>
-<!--              <div class="mt-4 text-center">-->
-<!--                Don't have an account? <a href="register.html">Create One</a>-->
-<!--              </div>-->
+              <!--              <div class="mt-4 text-center">-->
+              <!--                Don't have an account? <a href="register.html">Create One</a>-->
+              <!--              </div>-->
             </form>
           </div>
         </div>

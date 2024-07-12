@@ -111,7 +111,7 @@
               <div class="col-md-4">
                 <mat-form-field appearance="outline" *ngIf="contentLoaded">
                   <mat-label>Salario</mat-label>
-                  <input matInput placeholder="Ingrese Salario" formControlName="salario" type="number">
+                  <input matInput placeholder="Ingrese Salario" formControlName="salario"  [appInputMask]="2"  >
                   <mat-error *ngIf="datosGeneralesFormGroup.get('salario')?.hasError('required')">
                     Es necesario Salario!
                   </mat-error>

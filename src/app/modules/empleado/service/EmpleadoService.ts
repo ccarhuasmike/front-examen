@@ -10,8 +10,6 @@ import {EmpleadoRequest} from "../model/EmpleadoRequest";
   providedIn: 'root'
 })
 export class EmpleadoService {
-  // data: any;
-  //apiUrl:string="http://localhost:4950";
   constructor(
     private http: HttpClient
   ) {
@@ -41,6 +39,7 @@ export class EmpleadoService {
         });
     });
   }
+
   async postListaPaginadoEmpleado(request: ListEmpleadoRequest): Promise<PaginationResult> {
     return new Promise((resolve, reject) => {
       this.http
@@ -56,5 +55,4 @@ export class EmpleadoService {
         });
     });
   }
-
 }

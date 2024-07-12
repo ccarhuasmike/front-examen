@@ -32,8 +32,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTreeModule } from "@angular/material/tree";
+import {DecimalFormatDirective} from "@shared/directives/DecimalFormatDirective";
+
 @NgModule({
   declarations: [
+    DecimalFormatDirective,
     DialogoConfirmacionComponent,
   ],
 
@@ -79,7 +82,7 @@ import { MatTreeModule } from "@angular/material/tree";
   ],
   exports: [
     DialogoConfirmacionComponent,
-
+    DecimalFormatDirective
   ],
   providers: [  ],
 })

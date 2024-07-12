@@ -27,7 +27,9 @@ export class AuthService {
             this.loggedIn.next(true);
             this.router.navigate(['/empleado/bandejaempleado'])
           }else{
-            this._snackBar.open(response.message, "");
+            this._snackBar.open(response.message, "",{
+              duration: 1000
+            });
           }
       })
     );
