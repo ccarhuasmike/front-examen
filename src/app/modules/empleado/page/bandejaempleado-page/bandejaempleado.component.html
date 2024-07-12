@@ -1,0 +1,159 @@
+<div class="container-fluid">
+  <div class="form-group row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-rose card-header-icon">
+          <h4 class="card-title">BANDEJA DE EMPLEADO</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel [expanded]="matexpansionpanelfiltro" (opened)="matexpansionpanelfiltro = true"
+                                     (closed)="matexpansionpanelfiltro = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Filtro Búsqueda
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Nombres</mat-label>
+                        <input matInput placeholder="Ingrese Nombre" [(ngModel)]="listEmpleadoRequest.nombres">
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Documento</mat-label>
+                        <input matInput placeholder="Ingrese Documento" [(ngModel)]="listEmpleadoRequest.documentoId">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="offset-md-1 col-md-6" style="text-align: right;">
+                      <button mat-raised-button class="btn btn-info" (click)="LimpiarControles()">
+                        <mat-icon>delete</mat-icon>
+                        Limpiar
+                      </button>
+                      <button (click)="loadDatos()" mat-raised-button class="btn btn-primary">
+                        <mat-icon>search</mat-icon>
+                        Buscar
+                      </button>
+                    </div>
+                    <div class="col-md-5" style="text-align: right;">
+                      <button mat-raised-button class="btn btn-primary" routerLink="/empleado/registroempleado/0">
+                        Nuevo
+                      </button>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Resultado Búsqueda
+                    </mat-panel-title>
+                    <mat-panel-description>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div class="form-group row">
+                    <mat-sidenav-container>
+                      <mat-sidenav-content>
+                        <br>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="table-container">
+                              <table mat-table [dataSource]="dataSource" class="table" style="width: 1450px !important">
+                                <ng-container matColumnDef="docuemento">
+                                  <mat-header-cell class="table-column-100 text-justify-content" *matHeaderCellDef>
+                                    Nro Documento
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-100 text-justify-content" *matCellDef="let row">
+                                    <a [routerLink]="['/empleado/registroempleado',row.id]" queryParamsHandling="merge">
+                                      {{ row.documentoId }}
+                                    </a>
+                                  </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="nombre">
+                                  <mat-header-cell class="table-column-280 text-justify-content" *matHeaderCellDef>
+                                    Nombre
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-280"
+                                            *matCellDef="let row; let i=index;">
+                                    {{ row.nombres }}
+                                  </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="apellido">
+                                  <mat-header-cell class="table-column-180 text-justify-content" *matHeaderCellDef
+                                  >Apellidos
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-180 text-justify-content" *matCellDef="let row">
+                                    {{ row.apellidos }}
+                                  </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="edad">
+                                  <mat-header-cell class="table-column-300 text-justify-content" *matHeaderCellDef>
+                                    Edad
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-300 "
+                                            *matCellDef="let row; let i=index;">
+                                    {{ row.edad }}
+                                  </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="fechanacimiento">
+                                  <mat-header-cell class="table-column-100 text-justify-content" *matHeaderCellDef>
+                                    Fecha Nacimiento
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-100 text-justify-content"
+                                            *matCellDef="let row; let i=index;">
+                                    {{ row.fechaNacimiento| date: 'dd/MM/yyyy' }}
+                                  </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="salario">
+                                  <mat-header-cell class="table-column-100 text-justify-content" *matHeaderCellDef>
+                                    Salario
+                                  </mat-header-cell>
+                                  <mat-cell class="table-column-100 text-justify-content"
+                                            *matCellDef="let row; let i=index;">
+                                    {{ row.salario }}
+                                  </mat-cell>
+                                </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"
+                                         [ngClass]=" i % 2 != 0 ? 'row-color-tb' : ''"></mat-row>
+                                <tr class="mat-row no-data-row" *matNoDataRow>
+                                  <td class="mat-cell" colspan="7">No se encontraron registro.</td>
+                                </tr>
+                              </table>
+                              <div *ngIf="isLoading" class="spinner-container">
+                                <mat-progress-spinner [diameter]="50" color="primary" mode="indeterminate">
+                                </mat-progress-spinner>
+                              </div>
+                            </div>
+                            <div>
+                              <mat-paginator #paginator [hidden]="dataSource?.length === 0" [length]="totalRegistros"
+                                             (page)="pageChanged($event)"
+                                             [pageSize]="listEmpleadoRequest.pagination!.pageSize"
+                                             [pageSizeOptions]="[10, 50, 100]">
+                              </mat-paginator>
+                            </div>
+                          </div>
+                        </div>
+
+                      </mat-sidenav-content>
+                    </mat-sidenav-container>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

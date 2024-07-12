@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <mat-progress-bar [value]="value" color="primary" class="progressbar"
+                          [class.active]="progressRef.isStarted"></mat-progress-bar>
+        <div class="card-header card-header-green card-header-text">
+          <div class="card-text">
+            <h4 class="card-title">REGISTRO EMPLEADO</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <br>
+          <form [formGroup]="datosGeneralesFormGroup" *ngIf="datosGeneralesFormGroup"
+                (ngSubmit)='registroDatosGenerales()' class="form-horizontal w-100 p-md-1">
+            <div class="row">
+              <div class="col-md-12 text-right" style="margin-top: -40px;">
+                <button mat-raised-button class="btn btn-primary" [disabled]="isSubmitted">
+                  <mat-icon>save</mat-icon>
+                  Guardar
+                </button>
+                <a mat-raised-button class="btn btn-warning"
+                   [routerLink]="['/empleado/bandejaempleado']">
+                  <mat-icon>cancel</mat-icon>
+                  Cancelar
+                </a>
+              </div>
+            </div>
+            <h4>Datos Empleado</h4>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Nro Documento</mat-label>
+                  <input matInput placeholder="Ingrese Nro Documento" formControlName="documentoId" maxlength="15">
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('documentoId')?.hasError('required')">
+                    Es necesario Nro Documento!
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput placeholder="Ingrese Nro Documento" formControlName="nombres" maxlength="100">
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('nombres')?.hasError('required')">
+                    Es necesario Nombre!
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Apellidos</mat-label>
+                  <input matInput placeholder="Ingrese Apellido" formControlName="apellidos" maxlength="100">
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('apellidos')?.hasError('required')">
+                    Es necesario Apellidos!
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Edad</mat-label>
+                  <input matInput placeholder="Ingrese Nro Documento" formControlName="edad" type="number">
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('edad')?.hasError('required')">
+                    Es necesario Edad!
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Fecha Nacimiento</mat-label>
+                  <input matInput [matDatepicker]="pickerFechaNacimiento" autocomplete="off"
+                         formControlName="fechaNacimiento">
+                  <mat-datepicker-toggle matSuffix [for]="pickerFechaNacimiento"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFechaNacimiento color="primary"></mat-datepicker>
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('fechaNacimiento')?.hasError('required')">
+                    Es necesario Fecha Nacimiento
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" *ngIf="contentLoaded">
+                  <mat-label>Salario</mat-label>
+                  <input matInput placeholder="Ingrese Salario" formControlName="salario" type="number">
+                  <mat-error *ngIf="datosGeneralesFormGroup.get('salario')?.hasError('required')">
+                    Es necesario Salario!
+                  </mat-error>
+                </mat-form-field>
+                <ngx-skeleton-loader *ngIf="!contentLoaded" count="1" appearance="line" animation="progress"
+                                     [theme]="{
+                                       height: '50px',
+                                      'border-radius': 2
+                                    }">
+                </ngx-skeleton-loader>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
